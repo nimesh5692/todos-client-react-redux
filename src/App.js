@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+
+import { Login, Todos, Navbar } from "./components";
+
+import "./App.scss";
 
 function App() {
+  const isLoggedIn = useSelector((state) => {
+    return state.auth;
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar isAuth={isLoggedIn} />
+      <br />
+      <br />
+      <Grow in>
+        <Container>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="stretch"
+            spacing={5}
+          >
+            <Grid item xs={12} sm={12}>
+              {isLoggedIn ? <Todos /> : <Login />}
+            </Grid>
+          </Grid>
+        </Container>
+      </Grow>
     </div>
   );
 }
